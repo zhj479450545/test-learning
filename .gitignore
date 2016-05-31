@@ -1,6 +1,6 @@
-/target/
-target/
-*.classpath
 *.class
-bin/
-.settings/
+target/*
+*.MF
+*.classpath
+*.MF
+/target/
