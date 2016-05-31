@@ -1,6 +1,6 @@
-package com.se.spring.aop.service.impl;
+package com.se.spring.aop_helloworld.service.impl;
 
-import com.se.spring.aop.service.IHelloWorldService;
+import com.se.spring.aop_helloworld.service.IHelloWorldService;
 /**
  * 
  * @项目名称：test-learning

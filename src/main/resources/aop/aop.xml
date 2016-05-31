@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 1.配置aop需要的命名空间 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+<!-- 2.配置目标类 -->
+
+<!-- 3.配置切面 -->
+<!-- 切入点使用<aop:config>标签下的<aop:pointcut>配置，expression属性用于定义切入点模式，默认是AspectJ语法。
+切面使用<aop:config>标签下的<aop:aspect>标签配置，其中“ref”用来引用切面支持类的方法。 
+AspectJ语法：
+-->
+<aop:config>
+	<aop:aspect ref="aspect">
+		<aop:before method="beforeAdvice" pointcut-ref="pointcut"/>
+		<aop:after method="afterFinallyAdvice" pointcut-ref="pointcut"/>
+	</aop:aspect>
+</aop:config>
+
+</beans>
