@@ -16,5 +16,7 @@ package com.se.spring.aop_helloworld.service;
 public interface IHelloWorldService {
 
 	public void sayHello();
+	
+	public void sayBefore(String param);
 }
 

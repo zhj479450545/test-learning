@@ -20,5 +20,9 @@ public class HelloWorldService implements IHelloWorldService {
 		System.out.println("***** sayHello *****");
 	}
 
+	public void sayBefore(String param) {
+		System.out.println("***** sayBefore:" + param + " *****");
+	}
+
 }
 

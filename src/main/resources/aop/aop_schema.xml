@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- 1.配置aop需要的命名空间 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="helloWorldService" class="com.se.spring.aop_helloworld.service.impl.HelloWorldService" />
+	<bean id="aspect" class="com.se.spring.aop_helloworld.aspect.HelloWorldAspect" />
+	<aop:config>
+		<aop:aspect ref="aspect">
+			<aop:before method="beforeAdvice(java.lang.String)" arg-names="param" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayBefore(..)) and args(param)"/>
+		</aop:aspect>
+	</aop:config>
+</beans>

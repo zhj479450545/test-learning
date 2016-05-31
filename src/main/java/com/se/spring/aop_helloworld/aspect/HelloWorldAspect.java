@@ -21,5 +21,9 @@ public class HelloWorldAspect {
 	public void afterFinallyAdvice(){		
 		System.out.println("***** afterFinallyAdvice *****");
 	}
+	
+	public void beforeAdvice(String param){
+		System.out.println("***** beforeAdvice:" + param + " *****");
+	}
 }
 
