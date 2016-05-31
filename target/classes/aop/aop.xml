@@ -9,13 +9,19 @@ http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 <!-- 2.配置目标类 -->
+<bean id="helloWorldService" class="com.se.spring.aop_helloworld.service.impl.HelloWorldService" />
 
 <!-- 3.配置切面 -->
+<bean id="aspect" class="com.se.spring.aop_helloworld.aspect.HelloWorldAspect" />
 <!-- 切入点使用<aop:config>标签下的<aop:pointcut>配置，expression属性用于定义切入点模式，默认是AspectJ语法。
 切面使用<aop:config>标签下的<aop:aspect>标签配置，其中“ref”用来引用切面支持类的方法。 
 AspectJ语法：
+execution(* com.se.spring.aop_helloworld..*.*(..))：表示匹配com.se.spring.aop_helloworld包及子包下的任何方法执行。
+execution(* com.se.spring.aop_helloworld.service.*.*(..)):表示com.se.spring.aop_helloworld.service包下任何类的任何方法执行。
+execution(* com.se.spring.aop_helloworld.service.*.say*(..)):表示com.se.spring.aop_helloworld.service包下任何类的任何以"say"开始的方法执行。
 -->
 <aop:config>
+	<aop:pointcut expression="execution(* com.se.spring.aop_helloworld.service.*.say*(..))" id="pointcut"/>
 	<aop:aspect ref="aspect">
 		<aop:before method="beforeAdvice" pointcut-ref="pointcut"/>
 		<aop:after method="afterFinallyAdvice" pointcut-ref="pointcut"/>
