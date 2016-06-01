@@ -17,6 +17,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		<aop:aspect ref="aspect">
 			<aop:before method="beforeAdvice(java.lang.String)" arg-names="param" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayBefore(..)) and args(param)"/>
 			<aop:after-returning method="afterReturningAdvice" arg-names="returnValue" returning="returnValue" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAfterReturning(..))" />
+			<aop:after-throwing method="afterThrowingAdvice" arg-names="exception" throwing="exception" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAfterThrowing(..))"/>
 		</aop:aspect>
 	</aop:config>
 </beans>

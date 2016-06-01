@@ -27,5 +27,13 @@ public class AopTest {
 		IHelloWorldService helloWorldService = context.getBean("helloWorldService", IHelloWorldService.class);
 		helloWorldService.sayAfterReturning();
 	}
+	
+	@Test
+	public void testSchemaAfterThrowingAdvice(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("aop/aop_schema.xml");
+		IHelloWorldService helloWorldService = context.getBean("helloWorldService", IHelloWorldService.class);
+		helloWorldService.sayAfterThrowing();
+		
+	}
 }
 

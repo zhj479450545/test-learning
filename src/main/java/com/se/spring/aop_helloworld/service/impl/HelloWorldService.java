@@ -29,5 +29,10 @@ public class HelloWorldService implements IHelloWorldService {
 		return true;
 	}
 
+	public void sayAfterThrowing() {
+		System.out.println("***** sayAfterThrowing *****");
+		throw new RuntimeException();
+	}
+
 }
 

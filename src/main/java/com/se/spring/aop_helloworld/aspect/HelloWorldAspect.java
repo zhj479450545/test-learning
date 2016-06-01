@@ -29,5 +29,9 @@ public class HelloWorldAspect {
 	public void afterReturningAdvice(Object returnValue){
 		System.out.println("***** afterReturningAdvice:" + returnValue + " *****");
 	}
+	
+	public void afterThrowingAdvice(Exception exception){
+		System.out.println("***** afterThrowingAdvice:+"+ exception +" *****");
+	}
 }
 

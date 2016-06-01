@@ -20,5 +20,7 @@ public interface IHelloWorldService {
 	public void sayBefore(String param);
 	
 	public boolean sayAfterReturning();
+	
+	public void sayAfterThrowing();
 }
 
