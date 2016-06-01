@@ -24,5 +24,10 @@ public class HelloWorldService implements IHelloWorldService {
 		System.out.println("***** sayBefore:" + param + " *****");
 	}
 
+	public boolean sayAfterReturning() {
+		System.out.println("***** sayAfterReturning *****");
+		return true;
+	}
+
 }
 

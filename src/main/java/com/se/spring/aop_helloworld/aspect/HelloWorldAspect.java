@@ -25,5 +25,9 @@ public class HelloWorldAspect {
 	public void beforeAdvice(String param){
 		System.out.println("***** beforeAdvice:" + param + " *****");
 	}
+	
+	public void afterReturningAdvice(Object returnValue){
+		System.out.println("***** afterReturningAdvice:" + returnValue + " *****");
+	}
 }
 

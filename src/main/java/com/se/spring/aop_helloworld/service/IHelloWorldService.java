@@ -18,5 +18,7 @@ public interface IHelloWorldService {
 	public void sayHello();
 	
 	public void sayBefore(String param);
+	
+	public boolean sayAfterReturning();
 }
 

@@ -9,10 +9,14 @@ http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<bean id="helloWorldService" class="com.se.spring.aop_helloworld.service.impl.HelloWorldService" />
+	
+	<!-- 准备配置，配置切面bean -->
 	<bean id="aspect" class="com.se.spring.aop_helloworld.aspect.HelloWorldAspect" />
+	<!-- 以下才是切面配置 -->
 	<aop:config>
 		<aop:aspect ref="aspect">
 			<aop:before method="beforeAdvice(java.lang.String)" arg-names="param" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayBefore(..)) and args(param)"/>
+			<aop:after-returning method="afterReturningAdvice" arg-names="returnValue" returning="returnValue" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAfterReturning(..))" />
 		</aop:aspect>
 	</aop:config>
 </beans>
