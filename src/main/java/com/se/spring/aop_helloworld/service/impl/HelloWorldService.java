@@ -34,5 +34,18 @@ public class HelloWorldService implements IHelloWorldService {
 		throw new RuntimeException();
 	}
 
+	public void sayAfterFinally() {
+		System.out.println("***** sayAfterFinally *****");
+		throw new RuntimeException();
+	}
+
+	public void sayAround(String param) {
+		System.out.println("***** sayAround:"+ param +" *****");
+	}
+
+	public void sayAdvisorBefore(String param) {
+		System.out.println("***** sayAdvisorBefore:"+ param +" *****");
+	}
+
 }
 

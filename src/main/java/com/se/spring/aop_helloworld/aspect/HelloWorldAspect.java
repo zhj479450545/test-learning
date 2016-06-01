@@ -1,5 +1,7 @@
 package com.se.spring.aop_helloworld.aspect;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+
 /**
  * 
  * @项目名称：test-learning
@@ -32,6 +34,11 @@ public class HelloWorldAspect {
 	
 	public void afterThrowingAdvice(Exception exception){
 		System.out.println("***** afterThrowingAdvice:+"+ exception +" *****");
+	}
+
+	public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable{
+		Object proceed = joinPoint.proceed(new Object[]{"replace"});
+		return proceed;
 	}
 }
 

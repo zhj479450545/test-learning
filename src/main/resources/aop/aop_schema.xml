@@ -6,9 +6,11 @@ xmlns:aop="http://www.springframework.org/schema/aop"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  ">
 
 	<bean id="helloWorldService" class="com.se.spring.aop_helloworld.service.impl.HelloWorldService" />
+	
+	<bean id="beforeAdvice" class="com.se.spring.aop_helloworld.service.impl.BeforeAdviceImpl"></bean>
 	
 	<!-- 准备配置，配置切面bean -->
 	<bean id="aspect" class="com.se.spring.aop_helloworld.aspect.HelloWorldAspect" />
@@ -18,6 +20,12 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 			<aop:before method="beforeAdvice(java.lang.String)" arg-names="param" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayBefore(..)) and args(param)"/>
 			<aop:after-returning method="afterReturningAdvice" arg-names="returnValue" returning="returnValue" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAfterReturning(..))" />
 			<aop:after-throwing method="afterThrowingAdvice" arg-names="exception" throwing="exception" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAfterThrowing(..))"/>
+			<aop:around method="aroundAdvice" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAround(..))"/>
+			<aop:declare-parents types-matching="com.se.spring.aop_helloworld.service.IHelloWorldService+" 
+				implement-interface="com.se.spring.aop_helloworld.service.IIntroductionService" 
+				default-impl="com.se.spring.aop_helloworld.service.impl.IntroductionService"/>
 		</aop:aspect>
+		<aop:advisor advice-ref="beforeAdvice" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayAdvisorBefore(..))" />
 	</aop:config>
 </beans>
+<!-- 不推荐使用Advisor，除了在进行事务控制的情况下，其他情况一般不推荐使用该方式，该方式属于侵入式设计，必须实现通知API。 -->
