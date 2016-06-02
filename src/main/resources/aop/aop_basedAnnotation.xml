@@ -7,6 +7,9 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-<!-- Spring默认不支持@AspectJ风格的切面声明，为了支持需要使用如下配置： -->
-<aop:aspectj-autoproxy />
+	<!-- Spring默认不支持@AspectJ风格的切面声明，为了支持需要使用如下配置： -->
+	<aop:aspectj-autoproxy />
+
+	<bean id="helloWorldService" class="com.se.spring.aop_helloworld.service.impl.HelloWorldService" />
+	<bean id="aspect" class="com.se.spring.aop_helloworld.aspect.BasedAnnotationAspect" />
 </beans>

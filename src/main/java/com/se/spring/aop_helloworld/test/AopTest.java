@@ -57,5 +57,12 @@ public class AopTest {
 		IHelloWorldService helloWorldService = context.getBean("helloWorldService", IHelloWorldService.class);
 		helloWorldService.sayAdvisorBefore("hehe");
 	}
+	
+	@Test
+	public void testAnnotationBeforeAdvice(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("aop/aop_basedAnnotation.xml");
+		IHelloWorldService helloWorldService = context.getBean("helloWorldService", IHelloWorldService.class);
+		helloWorldService.sayAdvisorBefore("hehe");
+	}
 }
 
