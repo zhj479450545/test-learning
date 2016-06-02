@@ -49,6 +49,25 @@
 	    <version>1.8.9</version>
 	</dependency>
 	<!-- aop所需jar：结束 -->
+	<!-- mysql驱动：开始 -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.39</version>
+	</dependency>
+	<!-- mysql驱动：结束 -->
+	<!-- spring-jdbc:开始 -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-jdbc</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-tx</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	<!-- spring-jdbc:结束 -->
 	
   </dependencies>
 </project>

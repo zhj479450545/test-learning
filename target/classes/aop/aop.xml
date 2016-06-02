@@ -18,8 +18,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 AspectJ语法：
 execution(* com.se.spring.aop_helloworld..*.*(..))：表示匹配com.se.spring.aop_helloworld包及子包下的任何方法执行。
 execution(* com.se.spring.aop_helloworld.service.*.*(..)):表示com.se.spring.aop_helloworld.service包下任何类的任何方法执行。
-execution(* com.se.spring.aop_helloworld.service.*.say*(..)):表示com.se.spring.aop_helloworld.service包下任何类的任何以"say"开始的方法执行。
--->
+execution(* com.se.spring.aop_helloworld.service.*.say*(..)):表示com.se.spring.aop_helloworld.service包下任何类的任何以"say"开始的方法执行。-->
 <aop:config>
 	<aop:pointcut expression="execution(* com.se.spring.aop_helloworld.service.*.say*(..))" id="pointcut"/>
 	<aop:aspect ref="aspect">
