@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class JdbcTemplateTest {
@@ -82,6 +84,24 @@ public class JdbcTemplateTest {
 		String deleteSql = "delete from user where name=?";
 		count = jdbcTemplate.update(deleteSql, new Object[]{"xxxx"});
 		System.out.println(count);
+	}
+	
+	//	3）结果集处理回调：
+	@Test
+	public void testResultSet1(){
+		String insertSql = "insert into user(name) values('asdfghj')";
+		jdbcTemplate.update(insertSql);
+		String querySql = "select * from user";
+		List result = jdbcTemplate.query(querySql, new RowMapper<Map>(){
+			public Map mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Map row = new HashMap();
+				row.put(rs.getInt("id"), rs.getString("name"));
+				return row;
+			}
+		});
+		System.out.println(result.size());
+		String deleteSql = "delete from user where name='asdfghj'";
+		jdbcTemplate.update(deleteSql);
 	}
 }
 
