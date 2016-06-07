@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
@@ -23,23 +21,17 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.util.StringUtils;
 
 public class JdbcTemplateTest {
 	private static JdbcTemplate jdbcTemplate;
 	
 	@BeforeClass
 	public static void setUpClass(){
-		String driverClassName="com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://127.0.0.1:3306/test";
-		String username = "root";
-		String password = "zhoujian";
-		
-		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, username, password);
-		dataSource.setDriverClassName(driverClassName);
-		jdbcTemplate = new JdbcTemplate(dataSource);
+		jdbcTemplate = JdbcUtils.getJdbcTemplate();
 	}
 	
 	@Test
@@ -111,33 +103,49 @@ public class JdbcTemplateTest {
 		String deleteSql = "delete from user where name='asdfghj'";
 		jdbcTemplate.update(deleteSql);
 	}
-	@Before
-	public void setUp(){
-		// 注：sql语句中不能是复合语句(2条或以上)，否则会报语法错误
-		
-		//	1).判断表存在并删除
-//		String dropTableSql = "drop table if exists test_jdbc;";
-//		jdbcTemplate.update(dropTableSql);
-		//	2).建表
-		String createTableSql = "create table test_jdbc(id int(11) not null auto_increment, name varchar(50), primary key(id))";
-		jdbcTemplate.update(createTableSql);
-		//	3).创建函数
-		String createFunctionSql = "create function function_test(str char(50)) returns int(11) begin return length(str);end";
-		jdbcTemplate.update(createFunctionSql);
-		//	4).创建存储过程
-		String createProcedureSql = "create procedure procedure_test(inout inoutname varchar(50), out outid int) modifies sql data begin insert into test_jdbc(name) values(inoutname); set outid=identity(); set inoutname='hello'+inoutname;end;";
-		jdbcTemplate.execute(createProcedureSql);
+	
+	/**
+	 * 准备工作：创建表、函数、存储过程
+	 */
+//	@Before
+	public void setUp(String functionName, String procedrueName, String tableName){
+		// 注：sql语句中不能是多条语句(语法中的复合语句除外)，否则会报语法错误
+		if(StringUtils.isEmpty(tableName)){
+			//	1).判断表存在并删除
+			String dropTableSql = "drop table if exists " + tableName;
+			jdbcTemplate.update(dropTableSql);
+			//	2).建表
+			String createTableSql = "create table " + tableName + "(id int(11) not null auto_increment, name varchar(50), primary key(id))";
+			jdbcTemplate.update(createTableSql);
+		} if(StringUtils.isEmpty(functionName)){
+			//	3).创建函数
+			String createFunctionSql = "create function " + functionName + "(str char(50)) returns int(11) begin return length(str);end";
+			jdbcTemplate.update(createFunctionSql);
+		} if(StringUtils.isEmpty(procedrueName)){
+			//	4).创建存储过程
+			String createProcedureSql = "create procedure " + procedrueName + "(inout inoutname varchar(50), out outid int) modifies sql data begin insert into test_jdbc(name) values(inoutname); set outid=identity(); set inoutname='hello'+inoutname;end;";
+			jdbcTemplate.execute(createProcedureSql);
+		}
 	}
 	
+	/**
+	 * 后续工作：删除表、函数、存储过程
+	 */
 //	@After
-	public void tearDown(){
-		jdbcTemplate.execute("drop function if exists function_test");
-		jdbcTemplate.execute("drop procedure if exists procedure_test");
-		jdbcTemplate.execute("drop table if exists test_jdbc");
+	public void tearDown(String functionName, String procedrueName, String tableName){
+		if(!StringUtils.isEmpty(functionName)){			
+			jdbcTemplate.execute("drop function if exists " + functionName);
+		} if(!StringUtils.isEmpty(procedrueName)){			
+			jdbcTemplate.execute("drop procedure if exists " + procedrueName);
+		} if(!StringUtils.isEmpty(tableName)){			
+			jdbcTemplate.execute("drop table if exists " + tableName);
+		}
 	}
 	
+	//	mysql如何调用自定义函数:
 	@Test
-	public void testCallableStatementCreator(){
+	public void testCallableStatementCreator_fun(){
+		setUp("function_test", "procedure_test", "test_jdbc");
 		//	创建自定义函数
 		String createFuntionSql = "create function function_test(str varchar(50)) returns int return length(str)";
 		String dropFunctionSql = "drop function if exists function_test";
@@ -159,6 +167,33 @@ public class JdbcTemplateTest {
 			}
 		}, params);
 		System.out.println(outValueMap.get("result"));
+		tearDown("function_test", "procedure_test", "test_jdbc");
+	}
+	
+	/**
+	 * 调用存储过程
+	 */
+	@Test
+	public void testCallableStatementCreator_pro(){
+		setUp("function_test", "procedure_test", "test_jdbc");
+		final String callProcedureSql = "{call procedure_test(?, ?)}";
+		List<SqlParameter> params = new ArrayList<SqlParameter>();
+		params.add(new SqlInOutParameter("inOutName", Types.VARCHAR));
+		params.add(new SqlOutParameter("outId", Types.INTEGER));
+		Map<String, Object> outValues = jdbcTemplate.call(new CallableStatementCreator() {
+			
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cStatement = con.prepareCall(callProcedureSql);
+				cStatement.registerOutParameter(1, Types.VARCHAR);
+				cStatement.registerOutParameter(2, Types.INTEGER);
+				cStatement.setString(1, "test");
+				
+				return cStatement;
+			}
+		}, params);
+		System.out.println(outValues.get("inOutName"));
+		System.out.println(outValues.get("outId"));
+		tearDown("function_test", "procedure_test", "test_jdbc");
 	}
 }
 
