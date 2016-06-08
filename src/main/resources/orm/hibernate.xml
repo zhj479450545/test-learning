@@ -1,0 +1,15 @@
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"/> <!-- 指定数据源 -->
+	<property name="mappingResources">     <!-- 指定映射定义 -->
+		<list>
+			<value>orm/user.hbm.xml</value>
+		</list>
+	</property>
+	<property name="hibernateProperties">   <!--指定Hibernate属性 -->
+		<props>
+			<prop key="hibernate.dialect">
+              org.hibernate.dialect.HSQLDialect
+			</prop>
+		</props>
+	</property>
+</bean>
