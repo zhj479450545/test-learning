@@ -16,7 +16,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * @version
  */
 public class HelloWorldAspect {
-	
+
+	/**
+	 *如果不注释掉此方法，aop_schema.xml中“<aop:before method="beforeAdvice" arg-names="param" pointcut="execution(* com.se.spring.aop_helloworld.service.*.sayBefore(..)) and args(param)"/>”会报错，
+	 * 因为xml中默认找的是第一个beforeAdvice方法，而此方法没有参数，故不匹配。
+	 */
 	public void beforeAdvice(){
 		System.out.println("***** beforeAdvice *****");
 	}

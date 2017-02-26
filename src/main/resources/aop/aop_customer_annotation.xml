@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <context:component-scan base-package="com.se.spring.aop_customer_annotation"/>
+    <!--proxy-target-class="true"：让spring强制采用cglib动态代理。但默认值为false，表示自动识别采用何种代理：1.若类没有实现接口则采用cglib动态代理，否则采用jdk动态代理-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!--<bean id="myLogAspect" class="com.se.spring.aop_customer_annotation.MyLogAspect" />
+    当MyLogAspect有@Component注解是就可以不配置“myLogAspect”-->
+    <!--实际项目中不用配置“myController”-->
+    <bean id="myController" class="com.se.spring.aop_customer_annotation.MyController"/>
+</beans>

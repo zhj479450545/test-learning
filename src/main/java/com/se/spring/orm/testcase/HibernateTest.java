@@ -1,6 +1,7 @@
 package com.se.spring.orm.testcase;
 
 
+import com.se.spring.orm.vo.UserModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,8 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.se.spring.orm.vo.UserModel;
 
 public class HibernateTest {
 	

@@ -1,0 +1,12 @@
+Rabbit使用说明：
+一、需要安装“Erlang/OTP”与“rabbitmq-server”；选择好安装路径，然后默认配置即可
+安装方法详见：http://blog.csdn.net/boonya/article/details/37879739
+二、安装完成后，再配置环境变量。
+1.配置环境变量：
+新建变量：ERLANG_HOME=E:\java\RabbitMq\erl5.10.4  (erlang安装路径)，然后再path中添加%ERLANG_HOME%\bin;
+新建变量：RABBITMQ_SERVER=D:\Program Files\rabbitmq_server-3.3.4，然后再path中添加%RABBITMQ_SERVER%\sbin;
+三、运行sbin/rabbitmq-server.bat,启动RabbitMQ服务器
+四，运行“com.rabbitemq.hello_wold.RabbitMqTest”中的main方法。
+
+注意：若不先安装以上的“Erlang/OTP”与“rabbitmq-server”而直接运行main方法，则会抛出异常：connect confused
+
